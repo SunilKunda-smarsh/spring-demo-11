@@ -1,6 +1,7 @@
 package com.smarsh.spring_demo_11.config;
 
 import com.smarsh.spring_demo_11.repository.UserRepository;
+import com.smarsh.spring_demo_11.support.NotificationClient;
 import com.smarsh.spring_demo_11.support.UserService;
 import com.smarsh.spring_demo_11.support.UserServiceImpl;
 import com.smarsh.spring_demo_11.support.UserServiceInMemory;
@@ -13,8 +14,8 @@ public class ApplicationConfiguration {
 
    @Bean
    @Qualifier("userServiceImpl")
-    public UserService userService() {
-        return new UserServiceImpl();
+    public UserService userService(UserRepository userRepository, NotificationClient notificationClient) {
+        return new UserServiceImpl(userRepository, notificationClient);
     }
 
     @Bean

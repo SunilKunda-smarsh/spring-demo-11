@@ -1,5 +1,6 @@
 package com.smarsh.spring_demo_11.support;
 
+import com.smarsh.spring_demo_11.model.Notification;
 import com.smarsh.spring_demo_11.model.User;
 import com.smarsh.spring_demo_11.model.UserDB;
 import com.smarsh.spring_demo_11.repository.UserRepository;
@@ -14,10 +15,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;//=applicationCOntext.getBean("userRepository", UserRepository.class);
+    private NotificationClient notificationClient;
 
-    @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public UserServiceImpl(UserRepository userRepository, NotificationClient notificationClient) {
+        this.userRepository = userRepository;
+        this.notificationClient = notificationClient;
     }
 
 
@@ -31,6 +37,10 @@ public class UserServiceImpl implements UserService{
     public void createUser(User user) {
         UserDB userDB = map(user);
         userRepository.save(userDB);
+        //invoke notification service
+        Notification notification = new Notification();
+        notification.setMessage("User created successfully: " + user.getId());
+        notificationClient.sendNotification(notification);
     }
 
     private static UserDB map(User user) {

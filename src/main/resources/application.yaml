@@ -19,3 +19,8 @@ spring:
 user:
   service:
     id: userId
+
+notification:
+  service:
+    base:
+      url: http://localhost:8082
