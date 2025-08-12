@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 public class UserServiceInMemory implements UserService {
 
@@ -25,13 +27,13 @@ public class UserServiceInMemory implements UserService {
         log.info("User created: {}", user);
     }
 
-    public User getUser(){
+    public List<User> getUser(){
         // Logic to get a user
         log.info("Retrieving user");
         User user = new User();
         user.setId(is);
         user.setPassword("password123");
         log.info("User retrieved: {}", user);
-        return user;
+        return List.of(user);
     }
 }
